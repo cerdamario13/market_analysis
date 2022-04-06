@@ -19,14 +19,11 @@ def date_range_data(start_date: str, end_date: str, ticker: str) -> pd.DataFrame
     # Getting the first (date) element of the data and comparing with function end data
     first_date = ticker_data_all(ticker)['Date'].iloc[0]
 
-    if end_date_format < first_date:
-        end_date_format = first_date
-
-    mask =  (start_date_format < ticker_data_all(ticker)['Date']) & (end_date_format > ticker_data_all(ticker)['Date'])
+    mask =  (end_date_format > ticker_data_all(ticker)['Date']) & (start_date_format < ticker_data_all(ticker)['Date'])
 
     return ticker_data_all(ticker)[mask]
 
-# print(date_range_data('3/20/2000', '3/27/2022', 'AAPL'))
+print(date_range_data('3/20/2000', '4/5/2022', 'AAPL'))
 
 def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
 
