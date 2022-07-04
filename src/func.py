@@ -2,12 +2,11 @@
 import pandas_datareader as pdr
 from datetime import datetime
 import pandas as pd
-import matplotlib.pyplot as plt
 import dateutil.relativedelta
 
 # TODO have all of the data loaded into a dataframe and get data from there. 
 # Right now the loading time is too long
-def ticker_data_all(ticker:str):
+def ticker_data_all(ticker:str) -> pd.DataFrame:
     fund = pdr.get_data_yahoo(ticker)
     fund.reset_index(inplace=True)
 
@@ -25,7 +24,7 @@ def date_range_data(start_date: str, end_date: str, ticker: str) -> pd.DataFrame
 
     return ticker_data_all(ticker)[mask]
 
-# print(date_range_data('3/20/2022', '4/5/2022', 'AAPL'))
+print(date_range_data('3/20/2022', '4/5/2022', 'AAPL'))
 
 def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
 
@@ -48,16 +47,18 @@ def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
     arr = sum(yrr) / len(yrr)
     return round(arr, 2)
 
-# print(annual_rate_return('1/1/2020', '3/13/2022', 'AAPL'))
+print(annual_rate_return('1/1/2020', '3/13/2022', 'AAPL'))
 
-# One month ago calculator
-def x_month_ago(ticker: str = 'APPL', month: int = 1, value: str = 'Close') -> pd.DataFrame:
+# X month ago calculator
+def x_month_ago(ticker: str = 'AAPL', month: int = 1, value: str = 'Close') -> pd.DataFrame:
+    
+    df = ticker_data_all(ticker)
 
-    # today = datetime.today()
+    today = datetime.today()
     
     # Testing Dates
-    date_str = '2022-06-30'
-    today = datetime.strptime(date_str, "%Y-%m-%d")
+    # date_str = '2022-06-30'
+    # today = datetime.strptime(date_str, "%Y-%m-%d")
     m_1 = today - dateutil.relativedelta.relativedelta(months=month) # subtract one month
         
     # If the day falls on Sunday, add a day
@@ -66,13 +67,13 @@ def x_month_ago(ticker: str = 'APPL', month: int = 1, value: str = 'Close') -> p
     elif m_1.weekday() == 5: # If saturday, add two days
         m_1 = m_1 + dateutil.relativedelta.relativedelta(days=2)
         
-    mask1 = ticker_data_all(ticker)['Date'] == m_1.strftime("%Y-%m-%d")
+    mask1 = df['Date'] == m_1.strftime("%Y-%m-%d")
     
     # Dealing with market closures M_1
     count = 0
-    while (ticker_data_all(ticker)[mask1].empty):
+    while (df[mask1].empty):
         m_1 = m_1 + dateutil.relativedelta.relativedelta(days=1)
-        mask1 = ticker_data_all(ticker)['Date'] == m_1.strftime("%Y-%m-%d")
+        mask1 = df['Date'] == m_1.strftime("%Y-%m-%d")
         count += 1
 
         # Safety break
@@ -81,9 +82,9 @@ def x_month_ago(ticker: str = 'APPL', month: int = 1, value: str = 'Close') -> p
             break
         
     # New mask
-    mask1 = ticker_data_all(ticker)['Date'] >= m_1.strftime("%Y-%m-%d")
+    mask1 = df['Date'] >= m_1.strftime("%Y-%m-%d")
 
-    return ticker_data_all(ticker)[mask1][value]
+    return df[mask1][value]
 
 
 
