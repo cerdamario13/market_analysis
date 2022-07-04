@@ -5,7 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import dateutil.relativedelta
 
-
+# TODO have all of the data loaded into a dataframe and get data from there. 
+# Right now the loading time is too long
 def ticker_data_all(ticker:str):
     fund = pdr.get_data_yahoo(ticker)
     fund.reset_index(inplace=True)
@@ -18,7 +19,7 @@ def date_range_data(start_date: str, end_date: str, ticker: str) -> pd.DataFrame
     end_date_format = datetime.strptime(end_date, "%m/%d/%Y")
 
     # Getting the first (date) element of the data and comparing with function end data
-    first_date = ticker_data_all(ticker)['Date'].iloc[0]
+    # first_date = ticker_data_all(ticker)['Date'].iloc[0]
 
     mask =  (end_date_format > ticker_data_all(ticker)['Date']) & (start_date_format < ticker_data_all(ticker)['Date'])
 
@@ -50,32 +51,39 @@ def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
 # print(annual_rate_return('1/1/2020', '3/13/2022', 'AAPL'))
 
 # One month ago calculator
-def one_month_ago(ticker):
+def x_month_ago(ticker: str = 'APPL', month: int = 1, value: str = 'Close') -> pd.DataFrame:
 
-    today = datetime.today()
-    m_1 = today - dateutil.relativedelta.relativedelta(months=1) # subtract one month
-
+    # today = datetime.today()
+    
+    # Testing Dates
+    date_str = '2022-06-30'
+    today = datetime.strptime(date_str, "%Y-%m-%d")
+    m_1 = today - dateutil.relativedelta.relativedelta(months=month) # subtract one month
+        
     # If the day falls on Sunday, add a day
     if m_1.weekday() == 6:
         m_1 = m_1 + dateutil.relativedelta.relativedelta(days=1)
-    elif m_1.weekday() == 5: # If saturday, subtract one
-        m_1 = m_1 - dateutil.relativedelta.relativedelta(days=1)
+    elif m_1.weekday() == 5: # If saturday, add two days
+        m_1 = m_1 + dateutil.relativedelta.relativedelta(days=2)
+        
+    mask1 = ticker_data_all(ticker)['Date'] == m_1.strftime("%Y-%m-%d")
     
-    mask = ticker_data_all(ticker)['Date'] == datetime.today().strftime("%Y-%m-%d")
-
-    # Dealing with market closures
+    # Dealing with market closures M_1
     count = 0
-    while (ticker_data_all(ticker)[mask].empty):
+    while (ticker_data_all(ticker)[mask1].empty):
         m_1 = m_1 + dateutil.relativedelta.relativedelta(days=1)
-        mask = ticker_data_all(ticker)['Date'] == str(m_1)
+        mask1 = ticker_data_all(ticker)['Date'] == m_1.strftime("%Y-%m-%d")
         count += 1
 
         # Safety break
-        if count == 6:
+        if count == 10:
             print('Loop Break!')
             break
+        
+    # New mask
+    mask1 = ticker_data_all(ticker)['Date'] >= m_1.strftime("%Y-%m-%d")
 
-    return ticker_data_all(ticker)[mask]
+    return ticker_data_all(ticker)[mask1][value]
 
 
 
