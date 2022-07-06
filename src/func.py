@@ -1,18 +1,18 @@
-
 import pandas_datareader as pdr
 from datetime import datetime
-import pandas as pd
+import pandas as _pd
 import dateutil.relativedelta
 
 # TODO have all of the data loaded into a dataframe and get data from there. 
 # Right now the loading time is too long
-def ticker_data_all(ticker:str) -> pd.DataFrame:
+def ticker_data_all(ticker:str) -> _pd.DataFrame:
     fund = pdr.get_data_yahoo(ticker)
     fund.reset_index(inplace=True)
 
     return fund
+    
 
-def date_range_data(start_date: str, end_date: str, ticker: str) -> pd.DataFrame:
+def date_range_data(start_date: str, end_date: str, ticker: str) -> _pd.DataFrame:
 
     start_date_format = datetime.strptime(start_date, "%m/%d/%Y")
     end_date_format = datetime.strptime(end_date, "%m/%d/%Y")
@@ -24,14 +24,13 @@ def date_range_data(start_date: str, end_date: str, ticker: str) -> pd.DataFrame
 
     return ticker_data_all(ticker)[mask]
 
-print(date_range_data('3/20/2022', '4/5/2022', 'AAPL'))
 
-def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
+def annual_rate_return(star_date: str, end_date: str, data: _pd.DataFrame)-> float:
 
-    df = date_range_data(star_date, end_date, ticker)
+    df = data
 
     # Grouping the list into years
-    df['Year'] = pd.DatetimeIndex(df['Date']).year
+    df['Year'] = _pd.DatetimeIndex(df['Date']).year
     years = df.groupby('Year')
     list_years = list(years.groups.keys())
 
@@ -47,12 +46,11 @@ def annual_rate_return(star_date: str, end_date: str, ticker: str)-> float:
     arr = sum(yrr) / len(yrr)
     return round(arr, 2)
 
-print(annual_rate_return('1/1/2020', '3/13/2022', 'AAPL'))
 
 # X month ago calculator
-def x_month_ago(ticker: str = 'AAPL', month: int = 1, value: str = 'Close') -> pd.DataFrame:
+def x_month_ago(data: _pd.DataFrame, month: int = 1, value: str = 'Close') -> _pd.DataFrame:
     
-    df = ticker_data_all(ticker)
+    df = data
 
     today = datetime.today()
     
@@ -78,8 +76,7 @@ def x_month_ago(ticker: str = 'AAPL', month: int = 1, value: str = 'Close') -> p
 
         # Safety break
         if count == 10:
-            print('Loop Break!')
-            break
+            raise ValueError('An undexpected error occured. Try again.')
         
     # New mask
     mask1 = df['Date'] >= m_1.strftime("%Y-%m-%d")
