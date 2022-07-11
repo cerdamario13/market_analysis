@@ -1,12 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import func
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
+@app.route("/home", methods=['GET'])
 def hello_world():
-    return 'Hello World!'
-    
+    return render_template('home.html')
+        
 @app.route("/time2_ago", methods=['POST'])
 def time2_ago():
     
