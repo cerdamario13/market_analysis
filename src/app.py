@@ -26,7 +26,7 @@ def hello_world():
             return render_template("not_found.html", title = "Ticker Not Found")
         
         
-        fig1 = px.line(results, x = 'Date', y = 'Close', title = f"{ticker} - {time_frame} Month Data")
+        fig1 = px.line(results, x = 'Date', y = data_info, title = f"{ticker} - {time_frame} Month Data")
         graph1JSON = json.dumps(fig1, cls = plotly.utils.PlotlyJSONEncoder)
         
         return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info")

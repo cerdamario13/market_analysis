@@ -10,7 +10,16 @@
         <p>Month/s Ago</p>
         <p><input type="text" name="time" value="12"></p>
         <p>Data Info</p>
-        <p><input type="text" name="data_info" value="Close"></p>
+        <label for="cars">Data Type:</label>
+        <select name="data_info">
+          <option value="Close">Close</option>
+          <option value="Open">Open</option>
+          <option value="High">High</option>
+          <option value="Low">Low</option>
+          <option value="Volume">Volume</option>
+          <option value="Adj Close">Adj Close</option>
+        </select>
+          <br><br>
         <p><input type="submit" value="Submit"></p>
     </form>
 </div>
