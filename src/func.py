@@ -80,10 +80,7 @@ def x_month_ago(data: _pd.DataFrame, month: int = 1, value: str = 'Close') -> _p
         
     # New mask
     mask1 = df['Date'] >= m_1.strftime("%Y-%m-%d")
-    # Joining the Date and values to a list in dataFrame
-    df['Results'] = df[['Date', value]].values.tolist()
-
-    return df[mask1]['Results']
+    return df[mask1]
 
 
 

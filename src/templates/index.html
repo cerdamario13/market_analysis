@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="site-header-logo">
+        <h1>
+            {{ticker}}
+        </h1>
+    </div>
+    
+    <div class="row p-4">
+        <div class="card m-auto" style="width: 90%;">
+            <div class="card-body">
+                <div id="chart1"></div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!--plotly CDN-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var graph1 = {{ graph1JSON | safe }}
+        Plotly.plot("chart1", graph1, {})
+        
+    </script>
+    
+{% endblock %}

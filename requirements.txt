@@ -3,3 +3,4 @@ pandas_datareader
 dateutil-relativedelta
 datetime
 flask
+plotly-express
