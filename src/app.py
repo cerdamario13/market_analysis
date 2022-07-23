@@ -4,6 +4,7 @@ import func
 import plotly
 import plotly.express as px
 import json
+import yfinance as yahooFinance
 
 app = Flask(__name__)
 
@@ -22,6 +23,9 @@ def hello_world():
             data = func.ticker_data_all(ticker)
             # Getting data from x time ago
             results = func.x_month_ago(data, int(time_frame), data_info)
+            
+            # company info
+            company_info = yahooFinance.Ticker(ticker)
         except:
             return render_template("not_found.html", title = "Ticker Not Found")
         
