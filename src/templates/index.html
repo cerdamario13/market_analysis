@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="site-header-logo">
-        <h1>
-            {{ticker}}
-        </h1>
+        <h1>Stock Information</h1>
     </div>
     
     <div class="row p-4">
@@ -12,36 +10,25 @@
                 <div id="chart1"></div>
             </div>
         </div>
-        
     </div>
     
     <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Name</th>
+            <th scope="col">Sector</th>
+            <th scope="col">Location</th>
+            <th scope="col">Website</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+            <td>{{companyInfo['shortName']}}</td>
+            <td>{{companyInfo['sector']}}</td>
+            <td>{{ companyInfo['city'] }}, {{ companyInfo['country'] }}</td>
+            <td><a href="{{ companyInfo['website'] }}">link</a></td>
           </tr>
         </tbody>
       </table>

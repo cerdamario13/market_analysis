@@ -18,22 +18,21 @@ def hello_world():
         ticker = request.form['ticker']
         time_frame = request.form['time']
         data_info = request.form['data_info']
+        # company info dictionary
+        company_info = yahooFinance.Ticker(ticker).info
         
         try:
             data = func.ticker_data_all(ticker)
             # Getting data from x time ago
             results = func.x_month_ago(data, int(time_frame), data_info)
-            
-            # company info
-            company_info = yahooFinance.Ticker(ticker)
         except:
             return render_template("not_found.html", title = "Ticker Not Found")
         
         
-        fig1 = px.line(results, x = 'Date', y = data_info, title = f"{ticker} - {time_frame} Month Data")
+        fig1 = px.line(results, x = 'Date', y = data_info, title = f"{company_info['shortName']} ({ticker}) - {time_frame} Month Data")
         graph1JSON = json.dumps(fig1, cls = plotly.utils.PlotlyJSONEncoder)
         
-        return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info")
+        return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info)
          
     else:
         return render_template('home.html', title = "Home")
