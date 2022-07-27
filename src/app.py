@@ -32,7 +32,15 @@ def hello_world():
         fig1 = px.line(results, x = 'Date', y = data_info, title = f"{company_info['shortName']} ({ticker}) - {time_frame} Month Data")
         graph1JSON = json.dumps(fig1, cls = plotly.utils.PlotlyJSONEncoder)
         
-        return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info)
+        params = {
+            'Count': results[data_info].describe().iloc[0].round(0),
+            'Mean': results[data_info].describe().iloc[1].round(2),
+            'Std': results[data_info].describe().iloc[2].round(2),
+            'Min': results[data_info].describe().iloc[3].round(2),
+            'Max': results[data_info].describe().iloc[7].round(2),
+        }
+        
+        return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
          
     else:
         return render_template('home.html', title = "Home")

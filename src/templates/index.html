@@ -12,6 +12,7 @@
         </div>
     </div>
     
+    <!-- Bais Info Table-->
     <table class="table">
         <thead>
           <tr>
@@ -34,7 +35,31 @@
       </table>
       
       <br>
-      <h2>More about {{companyInfo['shortName']}}</h2>
+      <h2>More about {{companyInfo['shortName']}} Data Range</h2>
+      
+      <!--Analysis Table-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Days</th>
+            <th scope="col">Mean</th>
+            <th scope="col">Standard Deviation</th>
+            <th scope="col">Min</th>
+            <th scope="col">Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{Count}}</td>
+            <td>${{Mean}}</td>
+            <td>${{Std}}</td>
+            <td>${{Min}}</td>
+            <td>${{Max}}</td>
+          </tr>
+        </tbody>
+      </table>
     
     <!--plotly CDN-->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
