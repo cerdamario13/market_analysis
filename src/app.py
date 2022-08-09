@@ -5,6 +5,9 @@ import plotly
 import plotly.express as px
 import json
 import yfinance as yahooFinance
+import requests
+import os
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -20,6 +23,16 @@ def hello_world():
         data_info = request.form['data_info']
         # company info dictionary
         company_info = yahooFinance.Ticker(ticker).info
+        
+        secret_key = os.environ.get('ALPHAV_KEY', '...')
+        try: 
+            url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={secret_key}'
+            r = requests.get(url)
+            data_alpha = r.json()
+            df_alpha = pd.DataFrame(data_alpha['Time Series (Daily)']).transpose()
+        except:
+            return render_template("not_found.html", title = "Ticker Not Found")
+        
         
         try:
             data = func.ticker_data_all(ticker)
@@ -43,7 +56,12 @@ def hello_world():
         return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
          
     else:
-        return render_template('home.html', title = "Home")
+        
+        home_params = {
+            'stock1_name': 'AAPL',
+            'stock1_value': func.simple_data('AAPL'),
+        }
+        return render_template('home.html', title = "Home", **home_params)
         
             
 if __name__ == '__main__':

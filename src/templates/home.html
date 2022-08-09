@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 <div>
-    
-    <span>Hello</span>
-    
-    <ul class="list-group list-group-horizontal">
-      <li class="list-group-item"><span class="badge bg-primary">Primary</span></li>
-      <li class="list-group-item">Dapibus ac facilisis in</li>
-      <li class="list-group-item">Morbi leo risus</li>
-    </ul>
       
+    <div class="row">
+      <div class="col-sm-4">{{stock1_name}}-${{stock1_value}}</div>
+      <div class="col-sm-4">.col-sm-4</div>
+      <div class="col-sm-4">.col-sm-4</div>
+    </div>
+      
+    <br>
+    <br>
     <form action="#" method="post">
         <p>Ticker:</p>
         <p><input type="text" name="ticker" value="AAPL"></p>

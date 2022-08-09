@@ -3,8 +3,12 @@ from datetime import datetime
 import pandas as _pd
 import dateutil.relativedelta
 
-# TODO have all of the data loaded into a dataframe and get data from there. 
-# Right now the loading time is too long
+# latest stock info
+def simple_data(ticker:str) -> list:
+    fund = pdr.get_data_yahoo(ticker)['Close'][-1]
+    return round(fund, 2)
+    
+# Get all of the data loaded
 def ticker_data_all(ticker:str) -> _pd.DataFrame:
     fund = pdr.get_data_yahoo(ticker)
     fund.reset_index(inplace=True)
