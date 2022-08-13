@@ -24,20 +24,18 @@ def hello_world():
         # company info dictionary
         company_info = yahooFinance.Ticker(ticker).info
         
-        secret_key = os.environ.get('ALPHAV_KEY', '...')
+        secret_key = os.getenv('ALPHAV_KEY', '...')
         try: 
             url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={secret_key}'
             r = requests.get(url)
             data_alpha = r.json()
-            df_alpha = pd.DataFrame(data_alpha['Time Series (Daily)']).transpose()
-        except:
-            return render_template("not_found.html", title = "Ticker Not Found")
-        
-        
-        try:
+            df_alpha = pd.DataFrame(data_alpha['Time Series (Daily)']).transpose().reset_index()
+            # Renaming column headers
+            df_alpha = df_alpha.rename({'1. open': 'Open', '2. high': 'High', '3. low': 'Low', '4. close': 'Close', '5. volume': 'Volume', 'index': 'Date'}, axis=1)
             data = func.ticker_data_all(ticker)
             # Getting data from x time ago
-            results = func.x_month_ago(data, int(time_frame), data_info)
+            results = func.x_month_ago(df_alpha, int(time_frame), data_info)
+            results[['Open', 'High', 'Low', 'Close', 'Volume']] = results[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
         except:
             return render_template("not_found.html", title = "Ticker Not Found")
         
