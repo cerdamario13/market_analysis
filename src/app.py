@@ -32,7 +32,6 @@ def hello_world():
             df_alpha = pd.DataFrame(data_alpha['Time Series (Daily)']).transpose().reset_index()
             # Renaming column headers
             df_alpha = df_alpha.rename({'1. open': 'Open', '2. high': 'High', '3. low': 'Low', '4. close': 'Close', '5. volume': 'Volume', 'index': 'Date'}, axis=1)
-            data = func.ticker_data_all(ticker)
             # Getting data from x time ago
             results = func.x_month_ago(df_alpha, int(time_frame), data_info)
             results[['Open', 'High', 'Low', 'Close', 'Volume']] = results[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
@@ -54,12 +53,7 @@ def hello_world():
         return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
          
     else:
-        
-        home_params = {
-            'stock1_name': 'AAPL',
-            'stock1_value': func.simple_data('AAPL'),
-        }
-        return render_template('home.html', title = "Home", **home_params)
+        return render_template('home.html', title = "Home")
         
             
 if __name__ == '__main__':
