@@ -36,12 +36,78 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     
+    <!--Graph and Information-->
+    
     <div class="row p-4" style="visibility: {{ visibility }};">
       <div class="card m-auto" style="width: 90%;">
           <div class="card-body">
               <div id="chart1"></div> <!--The reference is at the end of the script-->
           </div>
       </div>
+    </div>
+    
+    <div style="visibility: {{ visibility }};">
+        <div class="site-header-logo">
+          <h1>Stock Information</h1>
+          <a class="btn btn-primary" role="button">Link</a>
+      </div>
+      
+      <div class="row p-4">
+          <div class="card m-auto" style="width: 90%;">
+              <div class="card-body">
+                  <div id="chart1"></div> <!--The reference is at the end of the script-->
+              </div>
+          </div>
+      </div>
+      
+      <!-- Bais Info Table-->
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Sector</th>
+              <th scope="col">Location</th>
+              <th scope="col">Website</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>{{companyInfo['shortName']}}</td>
+              <td>{{companyInfo['sector']}}</td>
+              <td>{{ companyInfo['city'] }}, {{ companyInfo['country'] }}</td>
+              <td><a href="{{ companyInfo['website'] }}">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <br>
+        <h2>More about {{companyInfo['shortName']}} Data Range</h2>
+        
+        <!--Analysis Table-->
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Days</th>
+              <th scope="col">Mean</th>
+              <th scope="col">Standard Deviation</th>
+              <th scope="col">Min</th>
+              <th scope="col">Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>{{Count}}</td>
+              <td>${{Mean}}</td>
+              <td>${{Std}}</td>
+              <td>${{Min}}</td>
+              <td>${{Max}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
     
     <!--plotly CDN-->

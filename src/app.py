@@ -54,7 +54,7 @@ def hello_world():
         return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, visibility = "visible" , **params)
          
     else:
-        return render_template('home.html', title = "Home", visibility="hidden")
+        return render_template('home.html', title = "Home", visibility="hidden", companyInfo = '')
             
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
