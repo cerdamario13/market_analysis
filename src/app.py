@@ -51,10 +51,10 @@ def hello_world():
             'Max': results[data_info].describe().iloc[7].round(2),
         }
         
-        return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
+        return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, visibility = "visible" , **params)
          
     else:
-        return render_template('home.html', title = "Home")
+        return render_template('home.html', title = "Home", visibility="hidden")
             
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
