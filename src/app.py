@@ -25,6 +25,7 @@ def hello_world():
         company_info = yahooFinance.Ticker(ticker).info
         
         secret_key = os.getenv('ALPHAV_KEY', '...')
+        
         try: 
             url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={secret_key}'
             r = requests.get(url)
@@ -50,11 +51,10 @@ def hello_world():
             'Max': results[data_info].describe().iloc[7].round(2),
         }
         
-        return render_template("index.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
+        return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, **params)
          
     else:
         return render_template('home.html', title = "Home")
-        
             
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')
