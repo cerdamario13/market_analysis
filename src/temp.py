@@ -1,15 +1,14 @@
-import func
+import requests
+import os
+import pandas as pd
 
-ticker = 'AAPL'
-    
-# Dataframe with all the data
-data = func.ticker_data_all(ticker)
+secret_key = os.environ.get('ALPHAV_KEY', '...')
 
-# Testings X month ago - works for years too
-one_month = func.x_month_ago(data, 60, 'Close')
-two_month = func.x_month_ago(data, 5, 'Close')
+url = f'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=AAPL&interval=60min&apikey={secret_key}'
+r = requests.get(url)
+data = r.json()
 
+df = pd.DataFrame.from_dict(data)
+print(df.to_markdown())
 
-# TODO Add ago functions
-# 5 days, 6 months, year to date, 1 year, 5 year, max
 print()

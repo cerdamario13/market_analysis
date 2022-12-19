@@ -1,13 +1,12 @@
-from flask import Flask, redirect, render_template, request, jsonify, url_for
+from flask import Flask, redirect, render_template, request
 from matplotlib.pyplot import title
 import func
 import plotly
 import plotly.express as px
 import json
 import yfinance as yahooFinance
-import requests
 import os
-import pandas as pd
+import wrangles
 
 app = Flask(__name__)
 
@@ -19,21 +18,15 @@ def hello_world():
             
         # Loading initial data
         ticker = request.form['ticker']
-        time_frame = request.form['time']
-        data_info = request.form['data_info']
+        time_frame = request.form.get('time', '')
+        data_info = request.form.get('data_info', 'Close')
+        save_data = request.form.get('save_data', '')
         # company info dictionary
-        company_info = yahooFinance.Ticker(ticker).info
+        company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
         
         secret_key = os.getenv('ALPHAV_KEY', '...')
         
-        try: 
-            # url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&outputsize=full&apikey={secret_key}'
-            # r = requests.get(url)
-            # data_alpha = r.json()
-            # df_alpha = pd.DataFrame(data_alpha['Time Series (Daily)']).transpose().reset_index()
-            # # Renaming column headers
-            # df_alpha = df_alpha.rename({'1. open': 'Open', '2. high': 'High', '3. low': 'Low', '4. close': 'Close', '5. volume': 'Volume', 'index': 'Date'}, axis=1)
-            
+        try:
             # Get data from Yahoo Finance
             data_object = yahooFinance.Ticker(ticker)
             data = data_object.history(period='max')
@@ -47,7 +40,7 @@ def hello_world():
             return render_template("not_found.html", title = "Ticker Not Found")
         
         
-        fig1 = px.line(results, x = 'Date', y = data_info, title = f"{company_info['shortName']} ({ticker}) - {time_frame} Month Data")
+        fig1 = px.line(results, x = 'Date', y = data_info, title = f"({ticker}) - {time_frame} Month Data")
         graph1JSON = json.dumps(fig1, cls = plotly.utils.PlotlyJSONEncoder)
         
         params = {

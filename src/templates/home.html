@@ -1,40 +1,51 @@
 {% extends "layout.html" %}
 {% block content %}
-<div>
+  <div>
       
-    <form action="#" method="post">
+    <form action="#" method="post" enctype="multipart/form-data">
       <div class="form-group">
+        
         <label for="ticker">Ticker</label>
         <input type="text" class="form-control" placeholder="AAPL" name="ticker">
         <label for="months_ago">Months </label>
         <input type="text" class="form-control" placeholder="12" name="time">
         
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Close" name="data_info">
-        <label class="form-check-label" for="inlineCheckbox1">Close</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Close" name="data_info">
+          <label class="form-check-label" for="inlineCheckbox1">Close</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Open" name="data_info">
+          <label class="form-check-label" for="inlineCheckbox2">Open</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="High" name="data_info">
+          <label class="form-check-label" for="inlineCheckbox3">High</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Low" name="data_info">
+          <label class="form-check-label" for="inlineCheckbox4">Low</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Volume" name="data_info">
+          <label class="form-check-label" for="inlineCheckbox5">Volume</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox_" value="Data" name="save_data">
+          <label class="form-check-label" for="inlineCheckbox_">Save Data</label>
+        </div>
+        
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Open" name="data_info">
-        <label class="form-check-label" for="inlineCheckbox1">Open</label>
-      </div>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="High" name="data_info">
-        <label class="form-check-label" for="inlineCheckbox1">High</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Low" name="data_info">
-        <label class="form-check-label" for="inlineCheckbox1">Low</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Volume" name="data_info">
-        <label class="form-check-label" for="inlineCheckbox1">Volume</label>
-      </div>
-      
-      </div>
-      
+        
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+  </div>
+  
     
     <!--Graph and Information-->
     
