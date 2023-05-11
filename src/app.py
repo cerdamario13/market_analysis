@@ -6,6 +6,8 @@ import plotly.express as px
 import json
 import yfinance as yahooFinance
 import wrangles
+import os.path
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -24,12 +26,24 @@ def hello_world():
         # company info dictionary
         company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
         
+        data = pd.DataFrame()
+        # Check if the ticker is saved in data
+        if os.path.exists(f"../data/{ticker}.csv"):
+            data = wrangles.recipe.run(
+                recipe=f"""
+                read:
+                  - file:
+                      name: ../data/{ticker}.csv
+                """
+            )
+        
         
         try:
-            # Get data from Yahoo Finance
-            data_object = yahooFinance.Ticker(ticker)
-            data = data_object.history(period='max')
-            data.reset_index(inplace=True)
+            # Get data from Yahoo Finance if the data is not already saved
+            if data.empty:
+                data_object = yahooFinance.Ticker(ticker)
+                data = data_object.history(period='max')
+                data.reset_index(inplace=True)
             
             # Saving the data if desired
             if save_data != '': 
