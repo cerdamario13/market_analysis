@@ -24,7 +24,7 @@ def hello_world():
         save_data = request.form.get('save_data', '')
         
         # company info dictionary
-        company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
+        # company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
         
         data = pd.DataFrame()
         # Check if the ticker is saved in data
@@ -74,7 +74,7 @@ def hello_world():
             'Max': results[data_info].describe().iloc[7].round(2),
         }
         
-        return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", companyInfo = company_info, visibility = "visible" , **params)
+        return render_template("home.html", graph1JSON = graph1JSON, title = "Stock Info", visibility = "visible" , **params)
          
     else:
         return render_template('home.html', title = "Home", visibility="hidden", companyInfo = '')
