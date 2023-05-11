@@ -5,7 +5,6 @@ import plotly
 import plotly.express as px
 import json
 import yfinance as yahooFinance
-import os
 import wrangles
 
 app = Flask(__name__)
@@ -21,10 +20,10 @@ def hello_world():
         time_frame = request.form.get('time', '')
         data_info = request.form.get('data_info', 'Close')
         save_data = request.form.get('save_data', '')
+        
         # company info dictionary
         company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
         
-        secret_key = os.getenv('ALPHAV_KEY', '...')
         
         try:
             # Get data from Yahoo Finance
@@ -32,10 +31,20 @@ def hello_world():
             data = data_object.history(period='max')
             data.reset_index(inplace=True)
             
+            # Saving the data if desired
+            if save_data != '': 
+                rec = f"""
+                write:
+                - file:
+                    name: ../data/{ticker}.csv
+                """
+                wrangles.recipe.run(recipe=rec, dataframe=data)
+            
             
             # Getting data from x time ago
             results = func.x_month_ago(data, int(time_frame), data_info)
             results[['Open', 'High', 'Low', 'Close', 'Volume']] = results[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
+            
         except:
             return render_template("not_found.html", title = "Ticker Not Found")
         
