@@ -80,7 +80,7 @@ def x_month_ago(data: _pd.DataFrame, month: int = 1, value: str = 'Close') -> _p
 
         # Safety break
         if count == 10:
-            raise ValueError('An undexpected error occured. Try again.')
+            raise ValueError('An unexpected error ocurred. Try again.')
         
     # New mask
     mask1 = df['Date'] >= m_1.strftime("%Y-%m-%d")
