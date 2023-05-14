@@ -22,13 +22,18 @@ def hello_world():
         time_frame = request.form.get('time', '')
         data_info = request.form.get('data_info', 'Close')
         save_data = request.form.get('save_data', '')
+        redownload_data = request.form.get('redownload_data', '')
         
         # company info dictionary
         # company_info = yahooFinance.Ticker(ticker).info # Not working, find a way to get stock info
         
+        # If redownload data is checked
+        if redownload_data != '':
+            save_data = ''
+        
         data = pd.DataFrame()
         # Check if the ticker is saved in data
-        if os.path.exists(f"../data/{ticker}.csv"):
+        if save_data != '' and os.path.exists(f"../data/{ticker}.csv"):
             data = wrangles.recipe.run(
                 recipe=f"""
                 read:
