@@ -65,35 +65,40 @@
       </div>
     </div>
     
-    <div style="visibility: {{ visibility }};">
-        <div class="site-header-logo">
-          <h1>Stock Information</h1>
+    {% if volume_selected %}
+      <div></div>
+    {% else %}
+      <div style="visibility: {{ visibility }}">
+          <div class="site-header-logo">
+            <h1>Stock Information</h1>
+        </div>
+                
+          <!--Analysis Table-->
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Days</th>
+                <th scope="col">Mean</th>
+                <th scope="col">Standard Deviation</th>
+                <th scope="col">Min</th>
+                <th scope="col">Max</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>{{Count}}</td>
+                <td>${{Mean}}</td>
+                <td>${{Std}}</td>
+                <td>${{Min}}</td>
+                <td>${{Max}}</td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-              
-        <!--Analysis Table-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Days</th>
-              <th scope="col">Mean</th>
-              <th scope="col">Standard Deviation</th>
-              <th scope="col">Min</th>
-              <th scope="col">Max</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>{{Count}}</td>
-              <td>${{Mean}}</td>
-              <td>${{Std}}</td>
-              <td>${{Min}}</td>
-              <td>${{Max}}</td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
+    {% endif %}
+    
     
     <!--plotly CDN-->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

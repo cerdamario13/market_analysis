@@ -71,7 +71,13 @@ def hello_world():
         fig1 = px.line(results, x = 'Date', y = data_info, title = f"({ticker}) - {time_frame} Month Data")
         graph1JSON = json.dumps(fig1, cls = plotly.utils.PlotlyJSONEncoder)
         
+        # Check if volume is selected, if so then do not show Stock Information
+        volume_selected = False
+        if data_info == 'Volume':
+            volume_selected = True
+        
         params = {
+            'volume_selected': volume_selected,
             'Count': results[data_info].describe().iloc[0].round(0),
             'Mean': results[data_info].describe().iloc[1].round(2),
             'Std': results[data_info].describe().iloc[2].round(2),
