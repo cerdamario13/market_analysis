@@ -64,7 +64,8 @@ def hello_world():
             results = func.x_month_ago(data, int(time_frame), data_info)
             results[['Open', 'High', 'Low', 'Close', 'Volume']] = results[['Open', 'High', 'Low', 'Close', 'Volume']].astype(float)
             
-        except:
+        except Exception as e:
+            print(f"Error: {e}")
             return render_template("not_found.html", title = "Ticker Not Found")
         
         
