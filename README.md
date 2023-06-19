@@ -1,5 +1,7 @@
-# market_analysis
-Python project for analyzing stocks and funds.
+# Market Analysis
+Flask Python project for analyzing stocks.
 
-## Mutual Funds
-One part of the project is calculating potential returns on a mutual fund based on historical data.
+This project utilizes [Plotly](https://plotly.com/python/) to generate charts and Flask to render page templates.
+
+
+
